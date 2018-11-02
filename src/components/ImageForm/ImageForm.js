@@ -1,7 +1,6 @@
 import React from 'react';
 
-const ImageForm = ({onInputChange, onSubmit}) => {
-    return (
+const ImageForm = ({ onInputChange, onSubmit }) => (
         <div>
             <h3>Detect faces in an image</h3>
             <div>
@@ -9,7 +8,6 @@ const ImageForm = ({onInputChange, onSubmit}) => {
                 <button onClick={onSubmit}>Detect</button>
             </div>
         </div>
-    )
-}
+);
 
 export default ImageForm;

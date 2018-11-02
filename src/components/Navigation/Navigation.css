@@ -1,0 +1,19 @@
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    padding: 10px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav p {
+    padding: 10px;
+    cursor: pointer;
+}
