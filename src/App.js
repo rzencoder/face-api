@@ -11,7 +11,7 @@ import Home from './components/Home/Home';
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  boxes: [],
   route: 'landing',
   isSignedIn: false,
   user: {
@@ -42,20 +42,27 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const faceParameters = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('imageInput');
     const width = parseInt(image.width, 10);
     const height = parseInt(image.height, 10);
-    return {
-      leftCol: faceParameters.left_col * width,
-      topRow: faceParameters.top_row * height,
-      rightCol: width - (faceParameters.right_col * width),
-      bottomRow: height - (faceParameters.bottom_row * height),
-    };
+    const faceParameters = data.outputs[0].data.regions;
+    const boxes = faceParameters.map((face) => {
+      const faceData = face.region_info.bounding_box;
+      return {
+        leftCol: faceData.left_col * width,
+        topRow: faceData.top_row * height,
+        rightCol: width - (faceData.right_col * width),
+        bottomRow: height - (faceData.bottom_row * height),
+      };
+    })
+    console.log(boxes)
+    return boxes;
+   
+    
   }
 
-  displayFaceBox = (box) => {
-    this.setState({ box });
+  displayFaceBoxes = (boxes) => {
+    this.setState({ boxes });
   }
 
   onInputChange = (event) => {
@@ -94,25 +101,29 @@ class App extends Component {
             })
             .catch(err => console.log(err));
         }
-        this.displayFaceBox(this.calculateFaceLocation(response));
+        this.displayFaceBoxes(this.calculateFaceLocation(response));
       })
       .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
-    if (this.state.route === 'landing') {
+    if (route === 'landing') {
       this.setState(initialState);
-    } else if (this.state.route === 'home') {
-      this.setState({ isSignedIn: true });
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true,
+      route: route });
+    } else {
+      this.setState({
+        route: route
+      });
     }
-    this.setState({
-      route,
-    });
+
   }
 
   render() {
+    
     const {
-      isSignedIn, imageUrl, route, box,
+      isSignedIn, imageUrl, route, boxes,
     } = this.state;
     return (
       <div className="App">
@@ -123,12 +134,9 @@ class App extends Component {
           ? <div>
           <Rank name={this.state.user.name} entries={this.state.user.entries}/>
           <ImageForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-          <FaceRecognition box={box} imageUrl={imageUrl}/>
+          <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
         </div>
-          : (route === 'signin'
-            ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-            : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
-          )
+          :  <SignIn route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
       }
 
       </div>

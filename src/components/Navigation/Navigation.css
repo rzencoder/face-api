@@ -4,7 +4,15 @@
     justify-content: space-between;
 }
 
+.logo-container {
+    display: flex;
+}
+
 .logo {
+    width: 40px;
+}
+
+.logo-text {
     padding: 10px;
 }
 

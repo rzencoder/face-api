@@ -1,9 +1,18 @@
 import React from 'react';
 import './Navigation.css';
+import face from '../../face.png';
 
 const Navigation = ({ onRouteChange, isSignedIn }) => (
+    
+    
+    
     <div className="nav-container">
-    <div className="logo">FaceMatch</div>
+    <div className="logo-container">
+    <div>
+    <img className="logo" src={face} />
+    </div>
+    <div className="logo-text">FaceMatch, {isSignedIn ? 'yes' : 'no'}</div>
+    </div>
   {isSignedIn
     ? <nav className="nav">
             <p onClick={() => onRouteChange('landing')}>Sign Out</p>

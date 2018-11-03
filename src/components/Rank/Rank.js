@@ -1,12 +1,9 @@
 import React from 'react';
 
 const Rank = ({ name, entries }) => (
-        <div>
-                {`${name} , your current rank is...`}
-          <div>
-            {entries}
-          </div>
-        </div>
+    <div>
+      {`${name} , you have searched for ${entries} images`}
+    </div>
 );
 
 export default Rank;

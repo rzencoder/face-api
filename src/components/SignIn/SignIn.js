@@ -5,27 +5,34 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signInEmail: '',
-      signInPassword: '',
+      email: '',
+      password: '',
+      name: ''
     };
   }
 
+  onNameChange = (event) => {
+      this.setState({ name: event.target.value });
+    }
+
     onEmailChange = (event) => {
-      this.setState({ signInEmail: event.target.value });
+      this.setState({ email: event.target.value });
     }
 
     onPasswordChange = (event) => {
-      this.setState({ signInPassword: event.target.value });
+      this.setState({ password: event.target.value });
     }
 
-    onSubmitSignIn = () => {
-      fetch('http://localhost:3001/signin',
+    onSubmit = () => {
+      const url = 'http://localhost:3001/' + this.props.route;
+      fetch(url,
         {
           method: 'post',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            email: this.state.signInEmail,
-            password: this.state.signInPassword,
+            email: this.state.email,
+            password: this.state.password,
+            name: this.state.name
           }),
         }).then(response => response.json())
         .then((user) => {
@@ -37,11 +44,17 @@ class SignIn extends React.Component {
     }
 
     render() {
+      const title = this.props.route.toUpperCase();
       return (
+        
         <div className="form-container">
         <div className="form">
-            <h3>LOGIN</h3>
+            <h3>{title}</h3>
             <div className="form-input-container">
+            {this.props.route === "register" ? <div>
+                <label htmlFor="name">Name</label>
+                <input onChange={this.onNameChange} type="text" name="name" id="name" />
+            </div> : '' }
             <div>
                 <label htmlFor="email-address">Email</label><br/>
                 <input onChange={this.onEmailChange} type="email" name="email-address" id="email-address" />
@@ -52,7 +65,7 @@ class SignIn extends React.Component {
             </div>
             </div>
             <div>
-            <input className="submit-btn" onClick={this.onSubmitSignIn} type="submit" value="Sign in" />
+            <input className="submit-btn" onClick={this.onSubmit} type="submit" value="Sign in" />
             </div>
             </div>
         </div>
