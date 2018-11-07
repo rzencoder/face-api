@@ -7,7 +7,8 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
-      name: ''
+      name: '',
+      error: ''
     };
   }
 
@@ -35,10 +36,15 @@ class SignIn extends React.Component {
             name: this.state.name
           }),
         }).then(response => response.json())
-        .then((user) => {
-          if (user.id) {
-            this.props.loadUser(user);
+        .then((data) => {
+          console.log(data)
+          if (data.id) {
+            this.props.loadUser(data);
             this.props.onRouteChange('home');
+          } else {
+            this.setState({
+              error: data
+            })
           }
         });
     }
@@ -49,19 +55,20 @@ class SignIn extends React.Component {
         
         <div className="form-container">
         <div className="form">
-            <h3>{title}</h3>
+            <h3 className="form-title">{title}</h3>
             <div className="form-input-container">
-            {this.props.route === "register" ? <div>
+            {this.state.err ? <div className="error-message">{this.state.error}</div> : '' }
+            {this.props.route === "register" ? <div className="input-container">
                 <label htmlFor="name">Name</label>
-                <input onChange={this.onNameChange} type="text" name="name" id="name" />
+                <input onChange={this.onNameChange} type="text" name="name" id="name" required/>
             </div> : '' }
-            <div>
-                <label htmlFor="email-address">Email</label><br/>
-                <input onChange={this.onEmailChange} type="email" name="email-address" id="email-address" />
+            <div className="input-container">
+                <label htmlFor="email-address">Email</label>
+                <input onChange={this.onEmailChange} type="email" name="email-address" id="email-address" required/>
             </div>
-            <div>
-                <label htmlFor="password">Password</label><br/>
-                <input onChange={this.onPasswordChange} type="password" name="password" id="password" />
+            <div className="input-container">
+                <label htmlFor="password">Password</label>
+                <input onChange={this.onPasswordChange} type="password" name="password" id="password" required/>
             </div>
             </div>
             <div>

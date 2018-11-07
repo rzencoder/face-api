@@ -6,6 +6,12 @@
 
 .logo-container {
     display: flex;
+    padding-left: 10px;
+}
+
+.logo-container div {
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -14,6 +20,10 @@
 
 .logo-text {
     padding: 10px;
+}
+
+.logo-text span {
+    font-weight: 700;
 }
 
 .nav {

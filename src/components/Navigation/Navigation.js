@@ -11,7 +11,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => (
     <div>
     <img className="logo" src={face} />
     </div>
-    <div className="logo-text">FaceMatch, {isSignedIn ? 'yes' : 'no'}</div>
+    <div className="logo-text">Face<span>Match</span></div>
     </div>
   {isSignedIn
     ? <nav className="nav">
