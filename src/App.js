@@ -132,8 +132,10 @@ class App extends Component {
         route === 'home'
           ? <div>
           <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+          <div className="face-search-container">
           <ImageForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
           <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
+          </div>
         </div>
           :  <SignIn route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
       }

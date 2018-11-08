@@ -16,7 +16,19 @@ animation: gradient 30s ease infinite;
     100%{background-position:0% 50%}
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.btn {
+  background: rgb(255, 81, 0);
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 10px 60px;
+  border-radius: 5px;
+  margin: 20px;
+  border: none;
+  box-shadow: 2px 2px 3px #444;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgb(248, 113, 50);
 }

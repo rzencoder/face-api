@@ -1,26 +1,16 @@
 .home-title {
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 400;
 }
 
 .home-title span {
     font-weight: 700;
-    font-size: 40px;
 }
 
-.btn-container {
-
+.home-img {
+    width: 300px;
 }
 
-button {
-    background:rgb(255, 81, 0);
-    color: white;
-    font-weight: 700;
-    font-size: 24px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 20px;
-    border: none;
-    box-shadow: 2px 2px 3px #444;
-    cursor: pointer;
+.tagline {
+    font-size: 18px;
 }

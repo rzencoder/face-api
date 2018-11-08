@@ -9,6 +9,15 @@
     padding-left: 10px;
 }
 
+@media (max-width: 350px) {
+    .logo-container {
+        display: none;
+    }
+    .nav-container {
+        justify-content: flex-end;
+    }
+}
+
 .logo-container div {
     display: flex;
     align-items: center;
