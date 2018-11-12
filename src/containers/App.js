@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
-import ImageForm from './components/ImageForm/ImageForm';
-import Navigation from './components/Navigation/Navigation';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Rank from './components/Rank/Rank';
-import SignIn from './components/SignIn/SignIn';
-import Home from './components/Home/Home';
+import ImageForm from '../components/ImageForm/ImageForm';
+import Navigation from '../components/Navigation/Navigation';
+import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
+import Rank from '../components/Rank/Rank';
+import SignIn from '../components/SignIn/SignIn';
+import Home from '../components/Home/Home';
 
 const initialState = {
   input: '',
@@ -13,6 +12,7 @@ const initialState = {
   boxes: [],
   route: 'landing',
   isSignedIn: false,
+  errorMessage: '',
   user: {
     id: 0,
     name: '',
@@ -41,6 +41,7 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
+    // Use api data to calculate face box data to display over image
     const image = document.getElementById('imageInput');
     const width = parseInt(image.width, 10);
     const height = parseInt(image.height, 10);
@@ -54,10 +55,7 @@ class App extends Component {
         bottomRow: height - (faceData.bottom_row * height),
       };
     })
-    console.log(boxes)
     return boxes;
-   
-    
   }
 
   displayFaceBoxes = (boxes) => {
@@ -73,19 +71,19 @@ class App extends Component {
     this.setState({
       imageUrl: input,
     });
-    fetch('http://localhost:3001/imageurl', {
+    fetch('http://localhost:8080/imageurl', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        input: this.state.input,
+        input: input,
       }),
     })
       .then(response => response.json())
       .then((response) => {
         if (response) {
-          fetch('http://localhost:3001/image', {
+          fetch('http://localhost:8080/image', {
             method: 'put',
             headers: {
               'Content-Type': 'application/json',
@@ -98,11 +96,11 @@ class App extends Component {
             .then((count) => {
               this.setState(Object.assign(this.state.user, { entries: count }));
             })
-            .catch(err => console.log(err));
+            .catch(err => this.setState({errorMessage: 'Error loading User Data'}));
         }
         this.displayFaceBoxes(this.calculateFaceLocation(response));
       })
-      .catch(err => console.log(err));
+      .catch(err => this.setState({errorMessage: 'Error loading API'}));
   }
 
   onRouteChange = (route) => {
@@ -116,30 +114,29 @@ class App extends Component {
         route: route
       });
     }
-
   }
 
-  render() {
-    
+  render() { 
     const {
       isSignedIn, imageUrl, route, boxes,
     } = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
-        {route === 'landing' ?
-        <Home onRouteChange={this.onRouteChange}/> :
-        route === 'home'
-          ? <div>
-          <Rank name={this.state.user.name} entries={this.state.user.entries}/>
-          <div className="face-search-container">
-          <ImageForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-          <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
+        { route === 'landing' ?
+          <Home onRouteChange={this.onRouteChange}/> :
+          route === 'home'
+          ? 
+          <div>
+            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+            <div className="face-search-container">
+              <ImageForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
+              <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
+            </div>
           </div>
-        </div>
-          :  <SignIn route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-      }
-
+          :  
+          <SignIn route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+        }
       </div>
     );
   }

@@ -25,7 +25,7 @@ class SignIn extends React.Component {
     }
 
     onSubmit = () => {
-      const url = 'http://localhost:3001/' + this.props.route;
+      const url = 'http://localhost:8080/' + this.props.route;
       fetch(url,
         {
           method: 'post',
@@ -37,7 +37,6 @@ class SignIn extends React.Component {
           }),
         }).then(response => response.json())
         .then((data) => {
-          console.log(data)
           if (data.id) {
             this.props.loadUser(data);
             this.props.onRouteChange('home');
@@ -57,7 +56,7 @@ class SignIn extends React.Component {
         <div className="form">
             <h3 className="form-title">{title}</h3>
             <div className="form-input-container">
-            {this.state.err ? <div className="error-message">{this.state.error}</div> : '' }
+            {this.state.error ? <div className="error-message">{this.state.error}</div> : '' }
             {this.props.route === "register" ? <div className="input-container">
                 <label htmlFor="name">Name</label>
                 <input onChange={this.onNameChange} type="text" name="name" id="name" required/>

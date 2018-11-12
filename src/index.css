@@ -5,9 +5,10 @@ body {
   padding: 0;
   font-family: 'Montserrat', sans-serif;
   color: white;
- background: linear-gradient(270deg, #07bec8, #078bc8, #074fc8);
-background-size: 600% 600%;
-animation: gradient 30s ease infinite;
+  text-align: center;
+  background: linear-gradient(270deg, #07bec8, #078bc8, #074fc8);
+  background-size: 600% 600%;
+  animation: gradient 30s ease infinite;
 }
 
 @keyframes gradient {
@@ -31,4 +32,8 @@ animation: gradient 30s ease infinite;
 
 .btn:hover {
   background: rgb(248, 113, 50);
+}
+
+input {
+  width: 100%;
 }
