@@ -9,6 +9,7 @@ const image = require('./src/controllers/image');
 const profile = require('./src/controllers/profile');
 const path = require('path');
 const app = express();
+require('dotenv').config();
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.json());
 app.use(expressValidator());
@@ -18,14 +19,23 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+const devdb = {
+  host: '127.0.0.1',
+  user: 'postgres',
+  password: 'testa',
+  database: 'face-match'
+}
+
+const db = {
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
+}
+
 const knex = require('knex')({
   client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    user : 'postgres',
-    password : 'testa',
-    database : 'face-match'
-  }
+  connection: db
 });
 
 knex.select('*').from('users').then(data => console.log(data));
