@@ -35,7 +35,8 @@ const db = {
 
 const knex = require('knex')({
   ssl: true,
-  host: 'postgresql-vertical-37797'
+  client: 'pg',
+  connectionString: process.env.DATABASE_URL
 });
 
 knex.select('*').from('users').then(data => console.log(data));
