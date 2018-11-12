@@ -50,7 +50,7 @@ app.get('/profile/:id', (req, res) => profile.handleGetProfile(req, res, knex));
 app.put('/image', (req, res) => image.handleImage(req, res, knex));
 app.post('/imageurl', (req, res) => image.handleApiCall(req, res));
 
-const PORT = 8080
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
     console.log(`app is running on port ${PORT}`)
