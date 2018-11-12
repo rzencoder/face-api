@@ -36,8 +36,8 @@ const db = {
 const knex = require('knex')({
   client: 'pg',
   connection: {
-    ssl: true,
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    ssl: true    
   }
 });
 
