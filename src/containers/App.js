@@ -71,7 +71,7 @@ class App extends Component {
     this.setState({
       imageUrl: input,
     });
-    fetch('http://localhost:8080/imageurl', {
+    fetch('/imageurl', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ class App extends Component {
       .then(response => response.json())
       .then((response) => {
         if (response) {
-          fetch('http://localhost:8080/image', {
+          fetch('/image', {
             method: 'put',
             headers: {
               'Content-Type': 'application/json',

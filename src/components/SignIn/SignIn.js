@@ -25,7 +25,7 @@ class SignIn extends React.Component {
     }
 
     onSubmit = () => {
-      const url = 'http://localhost:8080/' + this.props.route;
+      const url = '/' + this.props.route;
       fetch(url,
         {
           method: 'post',
