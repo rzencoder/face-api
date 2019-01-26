@@ -130,6 +130,7 @@ class App extends Component {
           <div>
             <Rank name={this.state.user.name} entries={this.state.user.entries}/>
             <div className="face-search-container">
+            Hello!!!!!!!!
               <ImageForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
               <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
             </div>

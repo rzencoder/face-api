@@ -19,12 +19,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-const devdb = {
-  host: '127.0.0.1',
-  user: 'postgres',
-  password: 'testa',
-  database: 'face-match'
-}
+
 
 const db = {
   host: process.env.HOST,
@@ -33,12 +28,14 @@ const db = {
   database: process.env.DATABASE
 }
 
+const prodDB = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+}
+
 const knex = require('knex')({
   client: 'pg',
-  connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true    
-  }
+  connection: devdb
 });
 
 knex.select('*').from('users').then(data => console.log(data));
